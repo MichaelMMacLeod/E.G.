@@ -1,0 +1,13 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+canvas {
+	border: 2px solid red;
+	background-color: #f1f1f1;
+}
+
+html {
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
