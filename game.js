@@ -1,7 +1,7 @@
 var neptune;
 
 function startGame() {
-	neptune = new imageComponent('planet.png', 0, 0, 800, 800, 0);
+	neptune = new imageComponent('planet.png', 500, 1000, 800, 800, 0);
 	gameArea.start();
 }
 
