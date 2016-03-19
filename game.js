@@ -1,7 +1,7 @@
 var neptune;
 
 function startGame() {
-	neptune = new imageComponent('planet.png', 500, 500, 800, 800, 10);
+	neptune = new imageComponent('planet.png', 0, 0, 800, 800, 0);
 	gameArea.start();
 }
 
@@ -33,11 +33,11 @@ function imageComponent(source, x, y, width, height, rotation) {
 	this.rotation = rotation;
 	this.update = function() {
 		ctx = gameArea.context;
-		ctx.translate(500, 500);
+		ctx.translate(x, y);
 		ctx.rotate(this.rotation);
-		ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
-		ctx.rotate(this.rotation);
-		ctx.translate(-500, -500);
+		ctx.drawImage(this.image, this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
+		ctx.rotate(-this.rotation);
+		ctx.translate(-x, -y);
 	}
 }
 
