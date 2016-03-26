@@ -12,7 +12,6 @@ loadComponents = function() {
 }
 
 config = {
-	showCenter : false, // (For developer) Displays a dot in the center of components.
 	fps : 20, // Frame rate.
 	shaders : true, // Purely visual. Adds shadows everywhere.
 	planetShadeAmount : 0.3, // Transparency of the planet shadow. Values range from 1 (dark) to 0 (no shadow).
@@ -74,12 +73,6 @@ function component(width, height, x, y, rotation, transparency, source) {
 		ctx.globalAlpha = this.transparency;
 		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 		ctx.restore();
-		if (config.showCenter == true) {
-			ctx.beginPath();
-			ctx.fillRect(this.midpoint[0], this.midpoint[1], 2, 2);
-			ctx.fillStyle = "red";
-			ctx.fill();
-		}
 	}
 }
 
