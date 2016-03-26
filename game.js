@@ -1,6 +1,10 @@
 startGame = function() {
 	gameArea.start();
-	neptune = new component(600, 600, 480, 270, 0, "planet.png");
+	neptune = new component(600, 600, 480, 270, 240, "planet.png");
+}
+
+gameConfig = {
+	showCenter : true // Displays a dot in the center of components
 }
 
 gameArea = {
@@ -11,9 +15,6 @@ gameArea = {
 		this.context = this.canvas.getContext("2d");
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 		this.interval = setInterval(updateGameArea, 20);
-	},
-	config : function() {
-		this.showCenter = false; // Displays a red dot in the center of components
 	},
 	clear : function() {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -44,15 +45,14 @@ function component(width, height, x, y, rotation, source) {
 		this.midpoint[0] - this.midpointNew[0],
 		this.midpoint[1] - this.midpointNew[1]
 	];
-	this.update = function() {
+	this.update = function() { // Draws the component with the correct rotation
 		ctx = gameArea.context;
-
 		ctx.save();
 		ctx.translate(this.midpointDiff[0], this.midpointDiff[1]);
 		ctx.rotate(this.rotation);
 		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 		ctx.restore();
-		if (gameArea.showCenter = true) {
+		if (gameConfig.showCenter == true) {
 			ctx.beginPath();
 			ctx.fillRect(this.midpoint[0], this.midpoint[1], 2, 2);
 			ctx.fillStyle = "red";
