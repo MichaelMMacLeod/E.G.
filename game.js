@@ -1,11 +1,17 @@
 startGame = function() {
 	gameArea.start();
-	neptune = new component(600, 600, 480, 540, 240, "planet.png");
+	loadComponents();
+}
+
+loadComponents = function() {
+	planet = new component(600, 600, 480, 540, 0, 1, "bluePlanet.png");
+	planetShadeOverlay = new component(600, 600, 480, 540, 0, 0.3, "planetShadeOverlay.png");
 }
 
 config = {
-	showCenter : true, // Displays a dot in the center of components
-	fps : 20 // Frame rate
+	showCenter : true, // Displays a dot in the center of components.
+	fps : 20, // Frame rate.
+	planetShaders : true // Purely visual. Adds shadows on planets.
 }
 
 gameArea = {
@@ -22,7 +28,15 @@ gameArea = {
 	}
 }
 
-function component(width, height, x, y, rotation, source) {
+function component(width, height, x, y, rotation, transparency, source) {
+	/*
+	width : width of the image to draw in pixels.
+	height : height of the image to draw in pixels.
+	x : x coordinate of the midpoint of the image in pixels.
+	y : y coordinate of the midpoint of the image in pixels.
+	transparency : Transparency of the image. Ranges from 1 (no transparency) to 0 (see-through).
+	source : URL of the image.
+	*/
 	this.image = new Image();
 	this.image.src = source;
 	this.width = width;
@@ -30,6 +44,7 @@ function component(width, height, x, y, rotation, source) {
 	this.x = x - this.width / 2;
 	this.y = y - this.height / 2;
 	this.rotation = rotation * Math.PI / 180;
+	this.transparency = transparency;
 	this.ab = [ // The bottom right corner of a shape at 0 degrees rotation
 		this.width + this.x,
 		this.height + this.y
@@ -51,6 +66,7 @@ function component(width, height, x, y, rotation, source) {
 		ctx.save();
 		ctx.translate(this.midpointDiff[0], this.midpointDiff[1]);
 		ctx.rotate(this.rotation);
+		ctx.globalAlpha = this.transparency;
 		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 		ctx.restore();
 		if (config.showCenter == true) {
@@ -64,5 +80,6 @@ function component(width, height, x, y, rotation, source) {
 
 function updateGameArea() {
 	gameArea.clear();
-	neptune.update();
+	planet.update();
+	planetShadeOverlay.update();
 }
