@@ -1,6 +1,6 @@
 startGame = function() {
 	gameArea.start();
-	neptune = new component(200, 200, 240, 135, 20, "planet.png");
+	neptune = new component(200, 200, 240, 135, -20, "planet.png");
 }
 
 gameArea = {
@@ -39,8 +39,8 @@ function component(width, height, x, y, rotation, source) {
 		
 	];
 	this.midpointNew = [ // The midpoint of the rotated shape
-		(this.x + this.abNew[0]) / 2,
-		(this.y + this.abNew[1]) / 2
+		this.midpoint[1] * Math.sin(-this.rotation) + this.midpoint[0] * Math.cos(-this.rotation),
+		this.midpoint[1] * Math.cos(-this.rotation) - this.midpoint[0] * Math.sin(-this.rotation)
 	];
 	this.update = function() {
 		ctx = gameArea.context;
@@ -51,7 +51,7 @@ function component(width, height, x, y, rotation, source) {
 		ctx.restore();
 
 		ctx.beginPath();
-		ctx.fillRect(this.abNew[0], this.abNew[1], 2, 2);
+		ctx.fillRect(this.midpointNew[0], this.midpointNew[1], 2, 2);
 		ctx.fillStyle = "red";
 		ctx.fill();
 	}
