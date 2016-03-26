@@ -5,11 +5,13 @@ startGame = function() {
 
 loadComponents = function() {
 	planet = new component(600, 600, 480, 540, 0, 1, "bluePlanet.png");
-	planetShadeOverlay = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShadeOverlay.png");
+	if (config.planetShade == true) {
+		planetShadeOverlay = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShadeOverlay.png");	
+	}
 }
 
 config = {
-	showCenter : true, // Displays a dot in the center of components.
+	showCenter : true, // (For developer) Displays a dot in the center of components.
 	fps : 20, // Frame rate.
 	planetShade : true, // Purely visual. Adds shadows on planets.
 	planetShadeAmount : 0.3 // Values range from 1 (dark) to 0 (no shadow).
