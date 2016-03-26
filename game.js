@@ -11,7 +11,7 @@ loadComponents = function() {
 }
 
 config = {
-	showCenter : true, // (For developer) Displays a dot in the center of components.
+	showCenter : false, // (For developer) Displays a dot in the center of components.
 	fps : 20, // Frame rate.
 	planetShade : true, // Purely visual. Adds shadows on planets.
 	planetShadeAmount : 0.3 // Values range from 1 (dark) to 0 (no shadow).
