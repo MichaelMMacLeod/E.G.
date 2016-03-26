@@ -1,6 +1,6 @@
 startGame = function() {
 	gameArea.start();
-	neptune = new component(200, 200, 240, 135, -20, "planet.png");
+	neptune = new component(200, 200, 240, 135, 50, "planet.png");
 }
 
 gameArea = {
@@ -32,11 +32,6 @@ function component(width, height, x, y, rotation, source) {
 	this.midpoint = [ // The midpoint of a shape at 0 degrees rotation
 		(this.x + this.ab[0]) / 2, 
 		(this.y + this.ab[1]) / 2
-	];
-	this.abNew = [ // The bottom right corner of the rotated shape
-		this.ab[1] * Math.sin(-this.rotation) + this.ab[0] * Math.cos(-this.rotation),
-		this.ab[1] * Math.cos(-this.rotation) - this.ab[0] * Math.sin(-this.rotation)
-		
 	];
 	this.midpointNew = [ // The midpoint of the rotated shape
 		this.midpoint[1] * Math.sin(-this.rotation) + this.midpoint[0] * Math.cos(-this.rotation),
