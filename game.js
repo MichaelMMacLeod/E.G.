@@ -4,10 +4,10 @@ startGame = function() {
 }
 
 loadComponents = function() {
-	planet = new component(600, 600, 480, 540, 0, 1, "bluePlanet.png");
+	planet = new component(600, 600, 480, 540, 0, 1, "bluePlanet.png", true);
 	if (config.shaders == true) {
-		backgroundShade = new component(960, 540, 480, 270, 0, config.backgroundShadeAmount, "backgroundShade.png");
-		planetShade = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShade.png");	
+		backgroundShade = new component(960, 540, 480, 270, 0, config.backgroundShadeAmount, "backgroundShade.png", false);
+		planetShade = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShade.png", false);	
 	}
 }
 
@@ -15,7 +15,9 @@ config = {
 	fps : 20, // Frame rate.
 	shaders : true, // Purely visual. Adds shadows everywhere.
 	planetShadeAmount : 0.3, // Transparency of the planet shadow. Values range from 1 (dark) to 0 (no shadow).
-	backgroundShadeAmount : 0.9 // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
+	backgroundShadeAmount : 0.9, // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
+	rotateLeftKey : 65, // Key used to rotate things to the left
+	rotateRightKey : 68 // Key used to rotate things to the right
 }
 
 gameArea = {
@@ -26,13 +28,19 @@ gameArea = {
 		this.context = this.canvas.getContext("2d");
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 		this.interval = setInterval(updateGameArea, config.fps);
+		window.addEventListener('keydown', function (e) {
+			gameArea.key = e.keyCode;
+		})
+		window.addEventListener('keyup', function (e) {
+			gameArea.key = false;
+		})
 	},
 	clear : function() {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 }
 
-function component(width, height, x, y, rotation, transparency, source) {
+function component(width, height, x, y, rotation, transparency, source, controllable) {
 	/*
 	width : width of the image to draw in pixels.
 	height : height of the image to draw in pixels.
@@ -40,6 +48,7 @@ function component(width, height, x, y, rotation, transparency, source) {
 	y : y coordinate of the midpoint of the image in pixels.
 	transparency : Transparency of the image. Ranges from 1 (no transparency) to 0 (see-through).
 	source : URL of the image.
+	controllable : Toggles if the image can be rotated by the user.
 	*/
 	this.image = new Image();
 	this.image.src = source;
@@ -49,23 +58,25 @@ function component(width, height, x, y, rotation, transparency, source) {
 	this.y = y - this.height / 2;
 	this.rotation = rotation * Math.PI / 180;
 	this.transparency = transparency;
-	this.ab = [ // The bottom right corner of a shape at 0 degrees rotation
-		this.width + this.x,
-		this.height + this.y
-	];
-	this.midpoint = [ // The midpoint of a shape at 0 degrees rotation
-		(this.x + this.ab[0]) / 2, 
-		(this.y + this.ab[1]) / 2
-	];
-	this.midpointNew = [ // The midpoint of the rotated shape
-		this.midpoint[1] * Math.sin(-this.rotation) + this.midpoint[0] * Math.cos(-this.rotation),
-		this.midpoint[1] * Math.cos(-this.rotation) - this.midpoint[0] * Math.sin(-this.rotation)
-	];
-	this.midpointDiff = [ // The difference between the two midpoints
-		this.midpoint[0] - this.midpointNew[0],
-		this.midpoint[1] - this.midpointNew[1]
-	];
+	this.controllable = controllable;
+	this.speed = 0;
 	this.update = function() { // Draws the component with the correct rotation
+		this.ab = [ // The bottom right corner of a shape at 0 degrees rotation
+			this.width + this.x,
+			this.height + this.y
+		];
+		this.midpoint = [ // The midpoint of a shape at 0 degrees rotation
+			(this.x + this.ab[0]) / 2, 
+			(this.y + this.ab[1]) / 2
+		];
+		this.midpointNew = [ // The midpoint of the rotated shape
+			this.midpoint[1] * Math.sin(-this.rotation) + this.midpoint[0] * Math.cos(-this.rotation),
+			this.midpoint[1] * Math.cos(-this.rotation) - this.midpoint[0] * Math.sin(-this.rotation)
+		];
+		this.midpointDiff = [ // The difference between the two midpoints
+			this.midpoint[0] - this.midpointNew[0],
+			this.midpoint[1] - this.midpointNew[1]
+		];
 		ctx = gameArea.context;
 		ctx.save();
 		ctx.translate(this.midpointDiff[0], this.midpointDiff[1]);
@@ -74,10 +85,21 @@ function component(width, height, x, y, rotation, transparency, source) {
 		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 		ctx.restore();
 	}
+	this.updateRotation = function() {
+		this.rotation = this.rotation + this.speed;
+	}
 }
 
 function updateGameArea() {
 	gameArea.clear();
+	planet.speed = 0;
+	if (gameArea.key && gameArea.key == config.rotateLeftKey) {
+		planet.speed = planet.speed - (1 * Math.PI / 180); 
+	}
+	if (gameArea.key && gameArea.key == config.rotateRightKey) {
+		planet.speed = planet.speed + (1 * Math.PI / 180);
+	}
+	planet.updateRotation();
 	if (config.shaders == true) {
 		backgroundShade.update();
 		planet.update();
