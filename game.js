@@ -12,12 +12,13 @@ loadComponents = function() {
 }
 
 config = {
-	fps : 20, // Frame rate.
+	updatePeriod : 20, // Lower: more screen updates per second.
 	shaders : true, // Purely visual. Adds shadows everywhere.
 	planetShadeAmount : 0.3, // Transparency of the planet shadow. Values range from 1 (dark) to 0 (no shadow).
 	backgroundShadeAmount : 0.9, // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
 	rotateLeftKey : 65, // Key used to rotate things to the left
-	rotateRightKey : 68 // Key used to rotate things to the right
+	rotateRightKey : 68, // Key used to rotate things to the right
+	rotationDecay : .95 // Decaying speed of the planet rotates when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
 }
 
 gameArea = {
@@ -27,7 +28,7 @@ gameArea = {
 		this.canvas.height = 540;
 		this.context = this.canvas.getContext("2d");
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-		this.interval = setInterval(updateGameArea, config.fps);
+		this.interval = setInterval(updateGameArea, config.updatePeriod);
 		window.addEventListener('keydown', function (e) {
 			gameArea.key = e.keyCode;
 		})
@@ -92,7 +93,12 @@ function component(width, height, x, y, rotation, transparency, source, controll
 
 function updateGameArea() {
 	gameArea.clear();
-	planet.speed = 0;
+	if (planet.speed > 1 * Math.PI / 180) {
+		planet.speed = 1 * Math.PI / 180;
+	} else if (planet.speed < -1 * Math.PI / 180) {
+		planet.speed = -1 * Math.PI / 180;
+	}
+	planet.speed = planet.speed * .95;
 	if (gameArea.key && gameArea.key == config.rotateLeftKey) {
 		planet.speed = planet.speed - (1 * Math.PI / 180); 
 	}
