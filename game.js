@@ -1,6 +1,6 @@
 startGame = function() {
 	gameArea.start();
-	neptune = new component(600, 600, 480, 270, 240, "planet.png");
+	neptune = new component(600, 600, 480, 540, 240, "planet.png");
 }
 
 config = {
