@@ -16,7 +16,7 @@ config = {
 	fps : 20, // Frame rate.
 	Shaders : true, // Purely visual. Adds shadows everywhere.
 	planetShadeAmount : 0.3, // Transparency of the planet shadow. Values range from 1 (dark) to 0 (no shadow).
-	backgroundShadeAmount : 0.8 // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
+	backgroundShadeAmount : 0.9 // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
 }
 
 gameArea = {
