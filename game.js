@@ -87,30 +87,31 @@ function component(width, height, x, y, rotation, transparency, source, controll
 		ctx.restore();
 	}
 	this.updateRotation = function() {
+		if (gameArea.key && gameArea.key == config.rotateLeftKey) {
+			this.speed = this.speed - (1 * Math.PI / 180); 
+		}
+		if (gameArea.key && gameArea.key == config.rotateRightKey) {
+			this.speed = this.speed + (1 * Math.PI / 180);
+		}
+		this.speed = this.speed * config.rotationDecay;
+		if (this.speed > 1 * Math.PI / 180) {
+			this.speed = 1 * Math.PI / 180;
+		} else if (this.speed < -1 * Math.PI / 180) {
+			this.speed = -1 * Math.PI / 180;
+		}
 		this.rotation = this.rotation + this.speed;
 	}
 }
 
 function updateGameArea() {
 	gameArea.clear();
-	if (planet.speed > 1 * Math.PI / 180) {
-		planet.speed = 1 * Math.PI / 180;
-	} else if (planet.speed < -1 * Math.PI / 180) {
-		planet.speed = -1 * Math.PI / 180;
-	}
-	planet.speed = planet.speed * .95;
-	if (gameArea.key && gameArea.key == config.rotateLeftKey) {
-		planet.speed = planet.speed - (1 * Math.PI / 180); 
-	}
-	if (gameArea.key && gameArea.key == config.rotateRightKey) {
-		planet.speed = planet.speed + (1 * Math.PI / 180);
-	}
-	planet.updateRotation();
 	if (config.shaders == true) {
+		planet.updateRotation();
 		backgroundShade.update();
 		planet.update();
 		planetShade.update();
 	} else {
+		planet.updateRotation();
 		planet.update();
 	}
 }
