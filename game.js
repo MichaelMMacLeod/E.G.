@@ -3,8 +3,9 @@ startGame = function() {
 	neptune = new component(600, 600, 480, 270, 240, "planet.png");
 }
 
-gameConfig = {
-	showCenter : true // Displays a dot in the center of components
+config = {
+	showCenter : true, // Displays a dot in the center of components
+	fps : 20 // Frame rate
 }
 
 gameArea = {
@@ -14,7 +15,7 @@ gameArea = {
 		this.canvas.height = 2700;
 		this.context = this.canvas.getContext("2d");
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-		this.interval = setInterval(updateGameArea, 20);
+		this.interval = setInterval(updateGameArea, config.fps);
 	},
 	clear : function() {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -52,7 +53,7 @@ function component(width, height, x, y, rotation, source) {
 		ctx.rotate(this.rotation);
 		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 		ctx.restore();
-		if (gameConfig.showCenter == true) {
+		if (config.showCenter == true) {
 			ctx.beginPath();
 			ctx.fillRect(this.midpoint[0], this.midpoint[1], 2, 2);
 			ctx.fillStyle = "red";
