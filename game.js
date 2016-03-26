@@ -5,16 +5,18 @@ startGame = function() {
 
 loadComponents = function() {
 	planet = new component(600, 600, 480, 540, 0, 1, "bluePlanet.png");
-	if (config.planetShade == true) {
-		planetShadeOverlay = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShadeOverlay.png");	
+	if (config.Shaders == true) {
+		backgroundShade = new component(960, 540, 480, 270, 0, config.backgroundShadeAmount, "backgroundShade.png");
+		planetShade = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShade.png");	
 	}
 }
 
 config = {
 	showCenter : false, // (For developer) Displays a dot in the center of components.
 	fps : 20, // Frame rate.
-	planetShade : true, // Purely visual. Adds shadows on planets.
-	planetShadeAmount : 0.3 // Values range from 1 (dark) to 0 (no shadow).
+	Shaders : true, // Purely visual. Adds shadows everywhere.
+	planetShadeAmount : 0.3, // Transparency of the planet shadow. Values range from 1 (dark) to 0 (no shadow).
+	backgroundShadeAmount : 0.8 // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
 }
 
 gameArea = {
@@ -83,6 +85,7 @@ function component(width, height, x, y, rotation, transparency, source) {
 
 function updateGameArea() {
 	gameArea.clear();
+	backgroundShade.update();
 	planet.update();
-	planetShadeOverlay.update();
+	planetShade.update();
 }
