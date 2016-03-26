@@ -88,10 +88,10 @@ function component(width, height, x, y, rotation, transparency, source, controll
 	}
 	this.updateRotation = function() {
 		if (gameArea.key && gameArea.key == config.rotateLeftKey) {
-			this.speed = this.speed - (1 * Math.PI / 180); 
+			this.speed = this.speed - (this.speed + 0.1) * (1 * Math.PI / 180); 
 		}
 		if (gameArea.key && gameArea.key == config.rotateRightKey) {
-			this.speed = this.speed + (1 * Math.PI / 180);
+			this.speed = this.speed + (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
 		this.speed = this.speed * config.rotationDecay;
 		if (this.speed > 1 * Math.PI / 180) {
