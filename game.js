@@ -16,7 +16,7 @@ config = {
 	backgroundShadeAmount : 0.9, // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
 	rotateLeftKey : 65, // Key used to rotate things to the left
 	rotateRightKey : 68, // Key used to rotate things to the right
-	rotationDecay : .95 // Decaying speed of the planet rotates when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
+	rotationDecay : 0.95 // Decaying speed of planet rotation when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
 }
 gameArea = {
 	canvas : document.createElement('canvas'),
