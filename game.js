@@ -3,11 +3,11 @@ startGame = function() {
 	loadComponents();
 }
 loadComponents = function() {
-	planet = new component(600, 600, 480, 540, 0, 1, "bluePlanet.png", true);
-	ship = new component(64, 64, 480, 100, 0, 1, "blueShip.png", false);
+	planet = new component(600, 600, 480, 540, 0, 1, "bluePlanet.png");
+	ship = new component(64, 64, 480, 100, 0, 1, "blueShip.png");
 	if (config.shaders == true) {
-		backgroundShade = new component(960, 540, 480, 270, 0, config.backgroundShadeAmount, "backgroundShade.png", false);
-		planetShade = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShade.png", false);	
+		backgroundShade = new component(960, 540, 480, 270, 0, config.backgroundShadeAmount, "backgroundShade.png");
+		planetShade = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShade.png");	
 	}
 }
 config = {
@@ -43,10 +43,9 @@ function component(
 	height, // Height of the image to draw in pixels.
 	x, // X coordinate of the midpoint of the image in pixels. 
 	y, // Y coordinate of the midpoint of the image in pixels.
-	rotation, // Default rotation of an image. Stays static if controllable is set to false.
+	rotation, // Default rotation of an image.
 	transparency, // Transparency of the image. Ranges from 1 (no transparency) to 0 (see-through).
-	source, // URL of the image. 
-	controllable // Toggles if the image can be rotated by the user.
+	source // URL of the image. 
 	) {
 	this.image = new Image();
 	this.image.src = source;
@@ -56,7 +55,6 @@ function component(
 	this.y = y - this.height / 2;
 	this.rotation = rotation * Math.PI / 180;
 	this.transparency = transparency;
-	this.controllable = controllable;
 	this.speed = 0;
 	this.update = function() { // Draws the component with the correct rotation
 		this.ab = [ // The bottom right corner of a shape at 0 degrees rotation
