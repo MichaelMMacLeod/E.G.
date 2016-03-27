@@ -2,7 +2,6 @@ startGame = function() {
 	gameArea.start();
 	loadComponents();
 }
-
 loadComponents = function() {
 	planet = new component(600, 600, 480, 540, 0, 1, "bluePlanet.png", true);
 	if (config.shaders == true) {
@@ -10,9 +9,8 @@ loadComponents = function() {
 		planetShade = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShade.png", false);	
 	}
 }
-
 config = {
-	updatePeriod : 20, // Lower: more screen updates per second.
+	updatePeriod : 20, // Lower: more screen updates per second. Keep this at 20.
 	shaders : true, // Purely visual. Adds shadows everywhere.
 	planetShadeAmount : 0.3, // Transparency of the planet shadow. Values range from 1 (dark) to 0 (no shadow).
 	backgroundShadeAmount : 0.9, // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
@@ -20,7 +18,6 @@ config = {
 	rotateRightKey : 68, // Key used to rotate things to the right
 	rotationDecay : .95 // Decaying speed of the planet rotates when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
 }
-
 gameArea = {
 	canvas : document.createElement('canvas'),
 	start : function() {
@@ -40,17 +37,16 @@ gameArea = {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 }
-
-function component(width, height, x, y, rotation, transparency, source, controllable) {
-	/*
-	width : width of the image to draw in pixels.
-	height : height of the image to draw in pixels.
-	x : x coordinate of the midpoint of the image in pixels.
-	y : y coordinate of the midpoint of the image in pixels.
-	transparency : Transparency of the image. Ranges from 1 (no transparency) to 0 (see-through).
-	source : URL of the image.
-	controllable : Toggles if the image can be rotated by the user.
-	*/
+function component(
+	width, // Width of the image to draw in pixels.
+	height, // Height of the image to draw in pixels.
+	x, // X coordinate of the midpoint of the image in pixels. 
+	y, // Y coordinate of the midpoint of the image in pixels.
+	rotation, // Default rotation of an image. Stays static if controllable is set to false.
+	transparency, // Transparency of the image. Ranges from 1 (no transparency) to 0 (see-through).
+	source, // URL of the image. 
+	controllable // Toggles if the image can be rotated by the user.
+	) {
 	this.image = new Image();
 	this.image.src = source;
 	this.width = width;
@@ -102,7 +98,6 @@ function component(width, height, x, y, rotation, transparency, source, controll
 		this.rotation = this.rotation + this.speed;
 	}
 }
-
 function updateGameArea() {
 	gameArea.clear();
 	if (config.shaders == true) {
