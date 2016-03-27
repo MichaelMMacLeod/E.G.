@@ -4,6 +4,7 @@ startGame = function() {
 }
 loadComponents = function() {
 	planet = new component(600, 600, 480, 540, 0, 1, "bluePlanet.png", true);
+	ship = new component(30, 30, 480, 100, 0, 1, "blueShip.png", false);
 	if (config.shaders == true) {
 		backgroundShade = new component(960, 540, 480, 270, 0, config.backgroundShadeAmount, "backgroundShade.png", false);
 		planetShade = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShade.png", false);	
@@ -105,8 +106,10 @@ function updateGameArea() {
 		backgroundShade.update();
 		planet.update();
 		planetShade.update();
+		ship.update();
 	} else {
 		planet.updateRotation();
 		planet.update();
+		ship.update();
 	}
 }
