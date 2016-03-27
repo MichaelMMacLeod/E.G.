@@ -15,8 +15,9 @@ config = {
 	shaders : true, // Purely visual. Adds shadows everywhere.
 	planetShadeAmount : 0.3, // Transparency of the planet shadow. Values range from 1 (dark) to 0 (no shadow).
 	backgroundShadeAmount : 0.9, // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
-	rotateLeftKey : 68, // Key used to rotate things to the left
-	rotateRightKey : 65, // Key used to rotate things to the right
+	rotateLeftKey : 68, // Key used to rotate things to the left.
+	rotateRightKey : 65, // Key used to rotate things to the right.
+	thrustKey : 87, // Key used to turn the ship's thrusters on. 
 	rotationDecay : 0.95 // Decaying speed of planet rotation when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
 }
 gameArea = {
@@ -82,10 +83,10 @@ function component(
 		ctx.restore();
 	}
 	this.updateRotation = function() { // Updates the rotation of a (planet) shape based on keys the user has pressed.
-		if (gameArea.key && gameArea.key == config.rotateLeftKey && ship.rotation >= 5 * Math.PI / 180) {
+		if (gameArea.key && gameArea.key == config.thrustKey && ship.rotation >= 5 * Math.PI / 180) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180); 
 		}
-		if (gameArea.key && gameArea.key == config.rotateRightKey && ship.rotation <= 5 * Math.PI / 180) {
+		if (gameArea.key && gameArea.key == config.thrustKey && ship.rotation <= 5 * Math.PI / 180) {
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
 		this.speed = this.speed * config.rotationDecay;
@@ -110,10 +111,10 @@ function component(
 			this.speed = -2 * Math.PI / 180;
 		}
 		this.rotation += this.speed;
-		if (this.rotation > 90 * Math.PI / 180) {
-			this.rotation = 90 * Math.PI / 180;
-		} else if (this.rotation < -90 * Math.PI / 180) {
-			this.rotation = -90 * Math.PI / 180;
+		if (this.rotation > 360 * Math.PI / 180) {
+			this.rotation -= 360 * Math.PI / 180;
+		} else if (this.rotation < -360 * Math.PI / 180) {
+			this.rotation += 360 * Math.PI / 180;
 		}
 	}
 }
