@@ -105,6 +105,18 @@ function component(
 		if (gameArea.keys && gameArea.keys[config.rotateRightKey]) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation > 90 * Math.PI / 180 && this.rotation < 180 * Math.PI / 180) {
+			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
+		}
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation > 0 && this.rotation < 90 * Math.PI / 180) {
+			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
+		}
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation < 0 && this.rotation > -90 * Math.PI / 180) {
+			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
+		}
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation < -90 * Math.PI / 180 && this.rotation > -180 * Math.PI / 180) {
+			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
+		}
 		this.speed = this.speed * config.rotationDecay;
 		if (this.speed > 2 * Math.PI / 180) {
 			this.speed = 2 * Math.PI / 180;
