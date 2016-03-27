@@ -99,6 +99,11 @@ function component(
 		this.rotation += this.speed;
 	}
 	this.updateShipRotation = function() { // Updates the rotation of a (ship) shape based on keys the user has pressed.
+		if (this.rotation > 180 * Math.PI / 180) {
+			this.rotation -= 360 * Math.PI / 180;
+		} else if (this.rotation < -180 * Math.PI / 180) {
+			this.rotation += 360 * Math.PI / 180;
+		}
 		if (gameArea.keys && gameArea.keys[config.rotateLeftKey]) {
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180); 
 		}
@@ -111,11 +116,11 @@ function component(
 		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation > 0 && this.rotation < 90 * Math.PI / 180) {
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
-		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation < 0 && this.rotation > -90 * Math.PI / 180) {
-			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
-		}
 		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation < -90 * Math.PI / 180 && this.rotation > -180 * Math.PI / 180) {
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
+		}
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation < 0 && this.rotation > -90 * Math.PI / 180) {
+			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
 		this.speed = this.speed * config.rotationDecay;
 		if (this.speed > 2 * Math.PI / 180) {
@@ -124,11 +129,6 @@ function component(
 			this.speed = -2 * Math.PI / 180;
 		}
 		this.rotation += this.speed;
-		if (this.rotation > 360 * Math.PI / 180) {
-			this.rotation -= 360 * Math.PI / 180;
-		} else if (this.rotation < -360 * Math.PI / 180) {
-			this.rotation += 360 * Math.PI / 180;
-		}
 	}
 }
 function updateGameArea() {
