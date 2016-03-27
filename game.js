@@ -82,12 +82,12 @@ function component(
 		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 		ctx.restore();
 	}
-	this.updateRotation = function() {
+	this.updateRotation = function() { // Updates the rotation of a shape based on keys the user has pressed.
 		if (gameArea.key && gameArea.key == config.rotateLeftKey) {
-			this.speed = this.speed - (this.speed + 0.1) * (1 * Math.PI / 180); 
+			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180); 
 		}
 		if (gameArea.key && gameArea.key == config.rotateRightKey) {
-			this.speed = this.speed + (this.speed + 0.1) * (1 * Math.PI / 180);
+			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
 		this.speed = this.speed * config.rotationDecay;
 		if (this.speed > 1 * Math.PI / 180) {
@@ -95,7 +95,7 @@ function component(
 		} else if (this.speed < -1 * Math.PI / 180) {
 			this.speed = -1 * Math.PI / 180;
 		}
-		this.rotation = this.rotation + this.speed;
+		this.rotation += this.speed;
 	}
 }
 function updateGameArea() {
