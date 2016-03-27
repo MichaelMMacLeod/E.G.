@@ -29,10 +29,11 @@ gameArea = {
 		document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 		this.interval = setInterval(updateGameArea, config.updatePeriod);
 		window.addEventListener('keydown', function (e) {
-			gameArea.key = e.keyCode;
+			gameArea.keys = (gameArea.keys || []);
+			gameArea.keys[e.keyCode] = true;
 		})
 		window.addEventListener('keyup', function (e) {
-			gameArea.key = false;
+			gameArea.keys[e.keyCode] = false;
 		})
 	},
 	clear : function() {
@@ -83,10 +84,10 @@ function component(
 		ctx.restore();
 	}
 	this.updateRotation = function() { // Updates the rotation of a (planet) shape based on keys the user has pressed.
-		if (gameArea.key && gameArea.key == config.thrustKey && ship.rotation >= 5 * Math.PI / 180) {
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && ship.rotation >= 5 * Math.PI / 180) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180); 
 		}
-		if (gameArea.key && gameArea.key == config.thrustKey && ship.rotation <= 5 * Math.PI / 180) {
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && ship.rotation <= 5 * Math.PI / 180) {
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
 		this.speed = this.speed * config.rotationDecay;
@@ -98,10 +99,10 @@ function component(
 		this.rotation += this.speed;
 	}
 	this.updateShipRotation = function() { // Updates the rotation of a (ship) shape based on keys the user has pressed.
-		if (gameArea.key && gameArea.key == config.rotateLeftKey) {
+		if (gameArea.keys && gameArea.keys[config.rotateLeftKey]) {
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180); 
 		}
-		if (gameArea.key && gameArea.key == config.rotateRightKey) {
+		if (gameArea.keys && gameArea.keys[config.rotateRightKey]) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
 		this.speed = this.speed * config.rotationDecay;
