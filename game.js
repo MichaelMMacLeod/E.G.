@@ -45,7 +45,7 @@ function component(
 	y, // Y coordinate of the midpoint of the image in pixels.
 	rotation, // Default rotation of an image.
 	transparency, // Transparency of the image. Ranges from 1 (no transparency) to 0 (see-through).
-	source // URL of the image. 
+	source // URL of the image.
 	) {
 	this.image = new Image();
 	this.image.src = source;
@@ -81,11 +81,11 @@ function component(
 		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
 		ctx.restore();
 	}
-	this.updateRotation = function() { // Updates the rotation of a shape based on keys the user has pressed.
-		if (gameArea.key && gameArea.key == config.rotateLeftKey) {
+	this.updateRotation = function() { // Updates the rotation of a (planet) shape based on keys the user has pressed.
+		if (gameArea.key && gameArea.key == config.rotateLeftKey && ship.rotation >= 5 * Math.PI / 180) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180); 
 		}
-		if (gameArea.key && gameArea.key == config.rotateRightKey) {
+		if (gameArea.key && gameArea.key == config.rotateRightKey && ship.rotation <= 5 * Math.PI / 180) {
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
 		this.speed = this.speed * config.rotationDecay;
@@ -96,17 +96,39 @@ function component(
 		}
 		this.rotation += this.speed;
 	}
+	this.updateShipRotation = function() { // Updates the rotation of a (ship) shape based on keys the user has pressed.
+		if (gameArea.key && gameArea.key == config.rotateLeftKey) {
+			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180); 
+		}
+		if (gameArea.key && gameArea.key == config.rotateRightKey) {
+			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
+		}
+		this.speed = this.speed * config.rotationDecay;
+		if (this.speed > 2 * Math.PI / 180) {
+			this.speed = 2 * Math.PI / 180;
+		} else if (this.speed < -2 * Math.PI / 180) {
+			this.speed = -2 * Math.PI / 180;
+		}
+		this.rotation += this.speed;
+		if (this.rotation > 90 * Math.PI / 180) {
+			this.rotation = 90 * Math.PI / 180;
+		} else if (this.rotation < -90 * Math.PI / 180) {
+			this.rotation = -90 * Math.PI / 180;
+		}
+	}
 }
 function updateGameArea() {
 	gameArea.clear();
 	if (config.shaders == true) {
 		planet.updateRotation();
+		ship.updateShipRotation();
 		backgroundShade.update();
 		planet.update();
 		planetShade.update();
 		ship.update();
 	} else {
 		planet.updateRotation();
+		ship.updateShipRotation();
 		planet.update();
 		ship.update();
 	}
