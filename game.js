@@ -133,9 +133,9 @@ function component(
 		this.rotation += this.speed;
 	}
 }
-function updateGameArea() {
+function updateGameArea() { // Order to call functions: updateRotation/updateShipRotation/update
 	gameArea.clear();
-	if (config.shaders == true) {
+	if (config.shaders == true) { // Shadows should be drawn directly after the update() is called for what they are shadowing
 		background.updateRotation();
 		planet.updateRotation();
 		ship.updateShipRotation();
