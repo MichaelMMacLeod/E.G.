@@ -100,17 +100,18 @@ function component(
 		this.rotation += this.speed;
 	}
 	this.updateShipRotation = function() { // Updates the rotation of a (ship) shape based on keys the user has pressed.
-		if (this.rotation > 180 * Math.PI / 180) {
+		if (this.rotation > 180 * Math.PI / 180) { // Keeps the rotation within the right bounds, so the following statements work at any rotation.
 			this.rotation -= 360 * Math.PI / 180;
 		} else if (this.rotation < -180 * Math.PI / 180) {
 			this.rotation += 360 * Math.PI / 180;
 		}
-		if (gameArea.keys && gameArea.keys[config.rotateLeftKey]) {
+		if (gameArea.keys && gameArea.keys[config.rotateLeftKey]) { // Accelerates the object (to the left) when the left key is pressed
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180); 
 		}
-		if (gameArea.keys && gameArea.keys[config.rotateRightKey]) {
+		if (gameArea.keys && gameArea.keys[config.rotateRightKey]) { // Accelerates the object (to the right) when the right key is pressed
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
+		// The following 4 if statements push the ship horizontal when the thrusters are turned on
 		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation > 90 * Math.PI / 180 && this.rotation < 180 * Math.PI / 180) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
@@ -123,8 +124,8 @@ function component(
 		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation < 0 && this.rotation > -90 * Math.PI / 180) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
-		this.speed = this.speed * config.rotationDecay;
-		if (this.speed > 2 * Math.PI / 180) {
+		this.speed = this.speed * config.rotationDecay; // Deceleration.
+		if (this.speed > 2 * Math.PI / 180) { // Limits the maximum speed.
 			this.speed = 2 * Math.PI / 180;
 		} else if (this.speed < -2 * Math.PI / 180) {
 			this.speed = -2 * Math.PI / 180;
