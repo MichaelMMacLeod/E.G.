@@ -7,7 +7,7 @@ loadComponents = function() {
 	ship = new component(64, 64, 480, 100, 0, 1, "blueShip.png");
 	background = new component(1450, 1450, 480, 540, 0, 1, "background.png")
 	if (config.shaders == true) {
-		backgroundShade = new component(960, 540, 480, 270, 0, config.backgroundShadeAmount, "backgroundShade.png");
+		backgroundShade = new component(960, 540, 480, 270, 0, config.backgroundShadeAmount, "backShade.png");
 		planetShade = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShade.png");	
 	}
 }
