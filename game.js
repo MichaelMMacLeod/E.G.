@@ -2,16 +2,20 @@ startGame = function() {
 	gameArea.start();
 	loadComponents();
 }
+
 loadComponents = function() {
 	planet = new component(600, 600, 480, 540, 0, 1, "bluePlanet.png");
 	ship = new component(64, 64, 480, 100, 0, 1, "blueShip.png");
 	background = new component(1450, 1450, 480, 540, 0, 1, "background.png")
 	colonizeButton = new component(128, 64, 64, 32, 0, 1, "colonizeButton.png");
+	placehold1 = new component(128, 64, 64, 96 + 4, 0, 1, "placeholderButton.png");
+	placehold2 = new component(128, 64, 192 + 4, 32, 0, 1, "placeholderButton.png");
 	if (config.shaders == true) {
 		backgroundShade = new component(960, 540, 480, 270, 0, config.backgroundShadeAmount, "backShade.png");
 		planetShade = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShade.png");	
 	}
 }
+
 config = {
 	updatePeriod : 20, // Lower: more screen updates per second. Keep this at 20.
 	shaders : true, // Purely visual. Adds shadows everywhere.
@@ -22,6 +26,7 @@ config = {
 	thrustKey : 87, // Key used to turn the ship's thrusters on. 
 	rotationDecay : 0.95 // Decaying speed of planet rotation when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
 }
+
 gameArea = {
 	canvas : document.createElement('canvas'),
 	start : function() {
@@ -42,6 +47,17 @@ gameArea = {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 }
+
+function button( // Create buttons to display on the screen
+	width, // Width of the image to draw in pixels.
+	height, // Height of the image to draw in pixels.
+	x, // X coordinate of the midpoint of the image in pixels. 
+	y, // Y coordinate of the midpoint of the image in pixels.
+	source // URL of the image.
+	) {
+
+}
+
 function component(
 	width, // Width of the image to draw in pixels.
 	height, // Height of the image to draw in pixels.
@@ -134,6 +150,7 @@ function component(
 		this.rotation += this.speed;
 	}
 }
+
 function updateGameArea() { // Order to call functions: updateRotation/updateShipRotation/update
 	gameArea.clear();
 	if (config.shaders == true) { // Shadows should be drawn directly after the update() is called for what they are shadowing
@@ -146,6 +163,8 @@ function updateGameArea() { // Order to call functions: updateRotation/updateShi
 		planetShade.update();
 		ship.update();
 		colonizeButton.update();
+		placehold1.update();
+		placehold2.update();
 	} else {
 		background.updateRotation();
 		planet.updateRotation();
@@ -154,5 +173,7 @@ function updateGameArea() { // Order to call functions: updateRotation/updateShi
 		planet.update();
 		ship.update();
 		colonizeButton.update();
+		placehold1.update();
+		placehold2.update();
 	}
 }
