@@ -59,7 +59,7 @@ function component(
 	this.rotation = rotation * Math.PI / 180;
 	this.transparency = transparency;
 	this.speed = 0;
-	this.update = function() { // Draws the component with the correct rotation
+	this.update = function() { // Draws the component with the correct rotation. Must be called after other 'update' type functions.
 		this.ab = [ // The bottom right corner of a shape at 0 degrees rotation
 			this.width + this.x,
 			this.height + this.y
