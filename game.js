@@ -6,6 +6,7 @@ loadComponents = function() {
 	planet = new component(600, 600, 480, 540, 0, 1, "bluePlanet.png");
 	ship = new component(64, 64, 480, 100, 0, 1, "blueShip.png");
 	background = new component(1450, 1450, 480, 540, 0, 1, "background.png")
+	colonizeButton = new component(128, 64, 64, 32, 0, 1, "colonizeButton.png");
 	if (config.shaders == true) {
 		backgroundShade = new component(960, 540, 480, 270, 0, config.backgroundShadeAmount, "backShade.png");
 		planetShade = new component(600, 600, 480, 540, 0, config.planetShadeAmount, "planetShade.png");	
@@ -144,6 +145,7 @@ function updateGameArea() { // Order to call functions: updateRotation/updateShi
 		planet.update();
 		planetShade.update();
 		ship.update();
+		colonizeButton.update();
 	} else {
 		background.updateRotation();
 		planet.updateRotation();
@@ -151,5 +153,6 @@ function updateGameArea() { // Order to call functions: updateRotation/updateShi
 		background.update();
 		planet.update();
 		ship.update();
+		colonizeButton.update();
 	}
 }
