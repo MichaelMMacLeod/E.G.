@@ -1,6 +1,7 @@
 startGame = function() {
 	gameArea.start();
 	load = [];
+	menu = [];
 	loadComponents();
 }
 
@@ -10,9 +11,9 @@ loadComponents = function() {
 	planet = new planet(600, 600, 480, 540, "bluePlanet.png");
 	planetShade = new shadow(600, 600, 480, 540, "planetShade.png", config.planetShadeAmount);
 	ship = new shipPart(64, 64, 480, 100, "blueShip.png");
-	colonizeButton = new button(128, 64, 64, 32, "colonizeButton.png");
-	placehold1 = new button(128, 64, 64, 96 + 4, "placeholderButton.png");
-	placehold2 = new button(128, 64, 192 + 4, 32, "placeholderButton.png");	
+	colonizeButton = new button(128, 64, 64, 32, "colonizeButton.png", "colonizeButtonHover.png");
+	placehold1 = new button(128, 64, 64, 96 + 4, "placeholderButton.png", "placeholderButtonHover.png");
+	placehold2 = new button(128, 64, 192 + 4, 32, "placeholderButton.png", "placeholderButtonHover.png");	
 }
 
 config = {
@@ -22,6 +23,7 @@ config = {
 	backgroundShadeAmount : 0.3, // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
 	rotateLeftKey : 68, // Key used to rotate things to the left.
 	rotateRightKey : 65, // Key used to rotate things to the right.
+	colonizeKey : 67, // Key used to colonize a planet
 	thrustKey : 87, // Key used to turn the ship's thrusters on. 
 	rotationDecay : 0.95 // Decaying speed of planet rotation when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
 }
@@ -47,7 +49,7 @@ gameArea = {
 	}
 }
 
-function button(width, height, x, y, source) {
+function button(width, height, x, y, source, hoverSource) {
 	load.push(this);
 	this.image = new Image();
 	this.image.src = source;
@@ -189,7 +191,8 @@ function shadow(width, height, x, y, source, transparency) {
 	}	
 }
 
-function updateGameArea() { // Order to call functions: updateRotation/updateShipRotation/update
+function updateGameArea() {
 	gameArea.clear();
+	if (gameArea.keys && gameArea.keys[config.colonizeKey]) {console.log("COLONIZE YAY")}
 	for (var i = 0; i < load.length; i++) {load[i].update();}
 }
