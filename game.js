@@ -1,4 +1,5 @@
 startGame = function() {
+	state = 0;
 	gameArea.start();
 	load = [];
 	loadComponents();
@@ -19,7 +20,8 @@ config = {
 	backgroundShadeAmount : 0.3, // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
 	rotateLeftKey : 68, // Key used to rotate things to the left.
 	rotateRightKey : 65, // Key used to rotate things to the right.
-	colonizeKey : 67, // Key used to colonize a planet
+	colonizeKey : 67, // Key used to colonize a planet 
+	mapKey : 77, // Key used to open the map
 	thrustKey : 87, // Key used to turn the ship's thrusters on. 
 	rotationDecay : 0.95 // Decaying speed of planet rotation when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
 }
@@ -42,6 +44,22 @@ gameArea = {
 	},
 	clear : function() {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+	},
+	load : function(state) {
+		switch (state) {
+			case 0:
+				for (var i = 0; i < load.length; i++) {load[i].update();}
+			break;
+			case 1:
+			break;
+			default:
+			break;
+		}
+	},
+	getInput : function() {
+		if (gameArea.keys && gameArea.keys[config.colonizeKey]) {
+			state = 1;
+		}
 	}
 }
 
@@ -173,6 +191,6 @@ function shadow(width, height, x, y, source, transparency) {
 
 function updateGameArea() {
 	gameArea.clear();
-	if (gameArea.keys && gameArea.keys[config.colonizeKey]) {console.log("COLONIZE YAY")}
-	for (var i = 0; i < load.length; i++) {load[i].update();}
+	gameArea.getInput();
+	gameArea.load(state);
 }
