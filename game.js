@@ -1,7 +1,6 @@
 startGame = function() {
 	gameArea.start();
 	load = [];
-	menu = [];
 	loadComponents();
 }
 
