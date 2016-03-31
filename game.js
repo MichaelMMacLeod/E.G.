@@ -11,9 +11,6 @@ loadComponents = function() {
 	planet = new planet(600, 600, 480, 540, "bluePlanet.png");
 	planetShade = new shadow(600, 600, 480, 540, "planetShade.png", config.planetShadeAmount);
 	ship = new shipPart(64, 64, 480, 100, "blueShip.png");
-	colonizeButton = new button(128, 64, 64, 32, "colonizeButton.png", "colonizeButtonHover.png");
-	placehold1 = new button(128, 64, 64, 96 + 4, "placeholderButton.png", "placeholderButtonHover.png");
-	placehold2 = new button(128, 64, 192 + 4, 32, "placeholderButton.png", "placeholderButtonHover.png");	
 }
 
 config = {
@@ -46,22 +43,6 @@ gameArea = {
 	},
 	clear : function() {
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-	}
-}
-
-function button(width, height, x, y, source, hoverSource) {
-	load.push(this);
-	this.image = new Image();
-	this.image.src = source;
-	this.width = width;
-	this.height = height;
-	this.x = x - this.width / 2;
-	this.y = y - this.height / 2;
-	this.update = function() {
-		ctx = gameArea.context;
-		ctx.save();
-		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-		ctx.restore();
 	}
 }
 
