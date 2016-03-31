@@ -57,8 +57,14 @@ gameArea = {
 		}
 	},
 	getInput : function() {
+		/*
+		State 0: (planet view) view of a planet
+		State 1: (colonize view) view of a planet, able to edit buildings on it
+		State 2: (attack view) view of a planet, able to attack buildings on it
+		State 3: (map view) view of the map, able to travel to different systems
+		*/
 		if (gameArea.keys && gameArea.keys[config.colonizeKey]) {
-			state = 1;
+			state = 0;
 		}
 	}
 }
@@ -74,10 +80,10 @@ function planet(width, height, x, y, source) {
 	this.rotation = 0;
 	this.speed = 0;
 	this.update = function() {
-		if (gameArea.keys && gameArea.keys[config.thrustKey] && ship.rotation >= 5 * Math.PI / 180) {
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && ship.rotation > 10 * Math.PI / 180 && ship.rotation < 170 * Math.PI / 180) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180); 
 		}
-		if (gameArea.keys && gameArea.keys[config.thrustKey] && ship.rotation <= 5 * Math.PI / 180) {
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && ship.rotation < -10 * Math.PI / 180 && ship.rotation > -170 * Math.PI / 180) {
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
 		this.speed = this.speed * config.rotationDecay;
@@ -131,16 +137,28 @@ function shipPart(width, height, x, y, source) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
 		// The following 4 if statements push the ship horizontal when the thrusters are turned on
-		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation > 90 * Math.PI / 180 && this.rotation < 180 * Math.PI / 180) {
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation > 0 * Math.PI / 180 && this.rotation <= 10 * Math.PI / 180) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
-		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation > 0 && this.rotation < 90 * Math.PI / 180) {
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation >= -10 * Math.PI / 180&& this.rotation < 0 * Math.PI / 180) {
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
-		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation < -90 * Math.PI / 180 && this.rotation > -180 * Math.PI / 180) {
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation > 10 * Math.PI / 180 && this.rotation < 90 * Math.PI / 180) {
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
-		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation < 0 && this.rotation > -90 * Math.PI / 180) {
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation < -10 * Math.PI / 180 && this.rotation > -90 * Math.PI / 180) {
+			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
+		}
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation > 90 * Math.PI / 180 && this.rotation < 170 * Math.PI / 180) {
+			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
+		}
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation < -90 * Math.PI / 180 && this.rotation > -170 * Math.PI / 180) {
+			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
+		}
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation >= 170 * Math.PI / 180 && this.rotation < 180 * Math.PI / 180) {
+			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
+		}
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation <= -170 * Math.PI / 180 && this.rotation > -180 * Math.PI / 180) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
 		this.speed = this.speed * config.rotationDecay; // Deceleration.
