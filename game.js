@@ -1,4 +1,5 @@
 startGame = function() {
+	stateCounter = 0;
 	state = 0;
 	gameArea.start();
 	load = [];
@@ -63,8 +64,13 @@ gameArea = {
 		State 2: (attack view) view of a planet, able to attack buildings on it
 		State 3: (map view) view of the map, able to travel to different systems
 		*/
-		if (gameArea.keys && gameArea.keys[config.colonizeKey]) {
-			state = 0;
+		if (gameArea.keys == false) {stateCounter = 0;}//
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && ship.rotation > -10 * Math.PI / 180 && ship.rotation < 10 * Math.PI / 180) {
+			stateCounter ++; 
+		}
+		if (stateCounter == 100) {
+			stateCounter = 0;
+			state = 1;
 		}
 	}
 }
@@ -131,16 +137,16 @@ function shipPart(width, height, x, y, source) {
 			this.rotation += 360 * Math.PI / 180;
 		}
 		if (gameArea.keys && gameArea.keys[config.rotateLeftKey]) { // Accelerates the object (to the left) when the left key is pressed
-			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180); 
+			this.speed += (this.speed + 0.1) * (2 * Math.PI / 180); 
 		}
 		if (gameArea.keys && gameArea.keys[config.rotateRightKey]) { // Accelerates the object (to the right) when the right key is pressed
-			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
+			this.speed -= (this.speed + 0.1) * (2 * Math.PI / 180);
 		}
-		// The following 4 if statements push the ship horizontal when the thrusters are turned on
+		// The following if statements push the ship horizontal (or vertical) when the thrusters are turned on
 		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation > 0 * Math.PI / 180 && this.rotation <= 10 * Math.PI / 180) {
 			this.speed -= (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
-		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation >= -10 * Math.PI / 180&& this.rotation < 0 * Math.PI / 180) {
+		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation >= -10 * Math.PI / 180 && this.rotation < 0 * Math.PI / 180) {
 			this.speed += (this.speed + 0.1) * (1 * Math.PI / 180);
 		}
 		if (gameArea.keys && gameArea.keys[config.thrustKey] && this.rotation > 10 * Math.PI / 180 && this.rotation < 90 * Math.PI / 180) {
