@@ -69,7 +69,7 @@ gameArea = {
 		}
 		if (stateCounter == 100) {
 			stateCounter = 0;
-			state = 1;
+			// state = 1; COMMENTED OUT SO THAT THE DEVELOPMENT BRANCH DOESN'T HAVE ANY LOOSE ENDS.
 		}
 	}
 }
