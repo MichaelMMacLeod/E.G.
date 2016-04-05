@@ -21,8 +21,6 @@ config = {
 	backgroundShadeAmount : 0.3, // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
 	rotateLeftKey : 68, // Key used to rotate things to the left.
 	rotateRightKey : 65, // Key used to rotate things to the right.
-	colonizeKey : 67, // Key used to colonize a planet 
-	mapKey : 77, // Key used to open the map
 	thrustKey : 87, // Key used to turn the ship's thrusters on. 
 	rotationDecay : 0.95 // Decaying speed of planet rotation when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
 }
