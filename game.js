@@ -64,9 +64,10 @@ gameArea = {
 		State 2: (attack view) view of a planet, able to attack buildings on it
 		State 3: (map view) view of the map, able to travel to different systems
 		*/
-		if (gameArea.keys == false) {stateCounter = 0;}//
 		if (gameArea.keys && gameArea.keys[config.thrustKey] && ship.rotation > -10 * Math.PI / 180 && ship.rotation < 10 * Math.PI / 180) {
 			stateCounter ++; 
+		} else if (stateCounter > 0) {
+			stateCounter--;
 		}
 		if (stateCounter == 100) {
 			stateCounter = 0;
