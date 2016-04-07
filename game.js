@@ -16,7 +16,7 @@ loadComponents = function() {
 
 config = {
 	updatePeriod : 20, // Lower: more screen updates per second. Keep this at 20.
-	shaders : true, // Purely visual. Adds shadows everywhere.
+	shaders : false, // Purely visual. Adds shadows everywhere.
 	planetShadeAmount : 0.3, // Transparency of the planet shadow. Values range from 1 (dark) to 0 (no shadow).
 	backgroundShadeAmount : 0.3, // Transparency of the background shadow. Values range from 1 (dark) to 0 (no shadow).
 	rotateLeftKey : 68, // Key used to rotate things to the left.
