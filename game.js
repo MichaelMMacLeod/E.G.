@@ -195,7 +195,7 @@ function shipPart(width, height, x, y, source) {
 }
 
 function shadow(width, height, x, y, source, transparency) {
-	if (config.shders == true) {load.push(this);}
+	if (config.shaders == true) {load.push(this);}
 	this.image = new Image();
 	this.image.src = source;
 	this.width = width;
