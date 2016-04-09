@@ -87,8 +87,8 @@ function projectile(width, height, source, type) {
 	this.type = type;
 	this.lifeTime = 100;
 	if (this.type = "ship") {
-		this.x = ship.x + ship.width / 2 - this.width / 2;
-		this.y = ship.y + ship.width / 2 - this.height / 2;
+		this.x = 480 - this.width / 2;
+		this.y = 53 - this.height / 2;
 	}
 	this.speed = 1;
 	this.update = function() {
