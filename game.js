@@ -85,21 +85,22 @@ function projectile(width, height, source, type) {
 	this.width = width;
 	this.height = height;
 	this.type = type;
-	this.lifeTime = 1;
+	this.lifeTime = 100;
 	if (this.type = "ship") {
 		this.x = ship.x + ship.width / 2 - this.width / 2;
 		this.y = ship.y + ship.width / 2 - this.height / 2;
 	}
 	this.speed = 1;
 	this.update = function() {
-		this.lifeTime--;
-		if (this.lifeTime = 0) { delete this; }
-		this.speed = this.speed * 1.2;
-		ctx = gameArea.context;
-		ctx.save();
-		ctx.translate(0, this.y + this.speed);
-		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-		ctx.restore();
+		if (this.lifeTime > 0) {
+			this.lifeTime--;
+			this.speed = this.speed * 1.2;
+			ctx = gameArea.context;
+			ctx.save();
+			ctx.translate(0, this.y + this.speed);
+			ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+			ctx.restore();
+		} else { delete(this); }
 	}
 }
 
