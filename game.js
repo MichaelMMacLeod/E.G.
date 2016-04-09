@@ -87,7 +87,7 @@ gameArea = {
 				}
 				if (stateCounter == 100) {
 					stateCounter = 0;
-					// state = 1; COMMENTED OUT SO THAT THE DEVELOPMENT BRANCH DOESN'T HAVE ANY LOOSE ENDS.
+					// state = config.mapViewState; COMMENTED OUT SO THAT THE DEVELOPMENT BRANCH DOESN'T HAVE ANY LOOSE ENDS.
 				}
 				if (gameArea.keys && gameArea.keys[config.fireKey]) {
 					bullet = new projectile(16, 16, "projectile.png", "ship")
