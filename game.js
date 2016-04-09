@@ -7,11 +7,21 @@ startGame = function() {
 }
 
 loadComponents = function() {
-	background = new planet(1450, 1450, 480, 540, "background.png");
-	backgroundShade = new shadow(960, 540, 480, 270, "backShade.png", config.backgroundShadeAmount);
-	planet = new planet(600, 600, 480, 540, "bluePlanet.png");
-	planetShade = new shadow(600, 600, 480, 540, "planetShade.png", config.planetShadeAmount);
-	ship = new shipPart(64, 64, 480, 100, "blueShip.png");
+	switch (state) {
+		case 0:
+			background = new planet(1450, 1450, 480, 540, "background.png");
+			backgroundShade = new shadow(960, 540, 480, 270, "backShade.png", config.backgroundShadeAmount);
+			planet = new planet(600, 600, 480, 540, "bluePlanet.png");
+			planetShade = new shadow(600, 600, 480, 540, "planetShade.png", config.planetShadeAmount);
+			ship = new shipPart(64, 64, 480, 100, "blueShip.png");
+		break;
+		case 2:
+		break;
+		case 3:
+		break;
+		default:
+		break;
+	}
 }
 
 config = {
@@ -23,7 +33,12 @@ config = {
 	rotateRightKey : 65, // Key used to rotate things to the right.
 	thrustKey : 87, // Key used to turn the ship's thrusters on. 
 	rotationDecay : 0.95, // Decaying speed of planet rotation when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
-	fireKey : 32 // Key used to fire a projectile from the ship
+	fireKey : 32, // Key used to fire a projectile from the ship
+	reloadTime : 100, // Time it takes before you can fire again
+	planetViewState : 0, // View of the planet
+	colonyViewState : 1, // View of the planet, able to edit it
+	attackViewState : 2, // View of the planet, able to destroy it
+	mapViewState : 3 // View of the map, able to travel to different systems
 }
 
 gameArea = {
@@ -52,28 +67,38 @@ gameArea = {
 			break;
 			case 1:
 			break;
+			case 2:
+			break;
+			case 3:
+			break;
 			default:
 			break;
 		}
 	},
 	getInput : function() {
-		/*
-		State 0: (planet view) view of a planet
-		State 1: (colonize view) view of a planet, able to edit buildings on it
-		State 2: (attack view) view of a planet, able to attack buildings on it
-		State 3: (map view) view of the map, able to travel to different systems
-		*/
-		if (gameArea.keys && gameArea.keys[config.thrustKey] && ship.rotation > -10 * Math.PI / 180 && ship.rotation < 10 * Math.PI / 180) {
-			stateCounter ++; 
-		} else if (stateCounter > 0) {
-			stateCounter--;
-		}
-		if (stateCounter == 100) {
-			stateCounter = 0;
-			// state = 1; COMMENTED OUT SO THAT THE DEVELOPMENT BRANCH DOESN'T HAVE ANY LOOSE ENDS.
-		}
-		if (gameArea.keys && gameArea.keys[config.fireKey]) {
-			bullet = new projectile(16, 16, "projectile.png", "ship")
+		switch (state) {
+			case 0:
+				if (gameArea.keys && gameArea.keys[config.thrustKey] && ship.rotation > -10 * Math.PI / 180 && ship.rotation < 10 * Math.PI / 180) {
+					stateCounter ++; 
+				} else if (stateCounter > 0) {
+					stateCounter--;
+				}
+				if (stateCounter == 100) {
+					stateCounter = 0;
+					// state = 1; COMMENTED OUT SO THAT THE DEVELOPMENT BRANCH DOESN'T HAVE ANY LOOSE ENDS.
+				}
+				if (gameArea.keys && gameArea.keys[config.fireKey]) {
+					bullet = new projectile(16, 16, "projectile.png", "ship")
+				}
+			break;
+			case 1:
+			break;
+			case 2:
+			break;
+			case 3:
+			break;
+			default:
+			break;
 		}
 	}
 }
@@ -92,8 +117,8 @@ function projectile(width, height, source, type) {
 	}
 	this.speed = 1;
 	this.update = function() {
+		this.lifeTime--;
 		if (this.lifeTime > 0) {
-			this.lifeTime--;
 			this.speed = this.speed * 1.2;
 			ctx = gameArea.context;
 			ctx.save();
