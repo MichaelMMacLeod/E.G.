@@ -8,16 +8,18 @@ startGame = function() {
 
 loadComponents = function() {
 	switch (state) {
-		case 0:
+		case config.planetViewState:
 			background = new planet(1450, 1450, 480, 540, "background.png");
 			backgroundShade = new shadow(960, 540, 480, 270, "backShade.png", config.backgroundShadeAmount);
 			planet = new planet(600, 600, 480, 540, "bluePlanet.png");
 			planetShade = new shadow(600, 600, 480, 540, "planetShade.png", config.planetShadeAmount);
 			ship = new shipPart(64, 64, 480, 100, "blueShip.png");
 		break;
-		case 2:
+		case config.colonyViewState:
 		break;
-		case 3:
+		case config.attackViewState:
+		break;
+		case config.mapViewState:
 		break;
 		default:
 		break;
@@ -62,14 +64,14 @@ gameArea = {
 	},
 	load : function(state) {
 		switch (state) {
-			case 0:
+			case config.planetViewState:
 				for (var i = 0; i < load.length; i++) {load[i].update();}
 			break;
-			case 1:
+			case config.colonyViewState:
 			break;
-			case 2:
+			case config.attackViewState:
 			break;
-			case 3:
+			case config.mapViewState:
 			break;
 			default:
 			break;
@@ -77,7 +79,7 @@ gameArea = {
 	},
 	getInput : function() {
 		switch (state) {
-			case 0:
+			case config.planetViewState:
 				if (gameArea.keys && gameArea.keys[config.thrustKey] && ship.rotation > -10 * Math.PI / 180 && ship.rotation < 10 * Math.PI / 180) {
 					stateCounter ++; 
 				} else if (stateCounter > 0) {
@@ -91,11 +93,11 @@ gameArea = {
 					bullet = new projectile(16, 16, "projectile.png", "ship")
 				}
 			break;
-			case 1:
+			case config.colonyViewState:
 			break;
-			case 2:
+			case config.attackViewState:
 			break;
-			case 3:
+			case config.mapViewState:
 			break;
 			default:
 			break;
