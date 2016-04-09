@@ -73,7 +73,7 @@ gameArea = {
 			// state = 1; COMMENTED OUT SO THAT THE DEVELOPMENT BRANCH DOESN'T HAVE ANY LOOSE ENDS.
 		}
 		if (gameArea.keys && gameArea.keys[config.fireKey]) {
-			bullet = new projectile(32, 32, "projectile.png", "ship")
+			bullet = new projectile(16, 16, "projectile.png", "ship")
 		}
 	}
 }
