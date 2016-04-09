@@ -22,7 +22,8 @@ config = {
 	rotateLeftKey : 68, // Key used to rotate things to the left.
 	rotateRightKey : 65, // Key used to rotate things to the right.
 	thrustKey : 87, // Key used to turn the ship's thrusters on. 
-	rotationDecay : 0.95 // Decaying speed of planet rotation when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
+	rotationDecay : 0.95, // Decaying speed of planet rotation when a key is not pressed. Ranges from 1 (No decay) to 0 (Insta-stop).
+	fireKey : 32 // Key used to fire a projectile from the ship
 }
 
 gameArea = {
@@ -71,6 +72,34 @@ gameArea = {
 			stateCounter = 0;
 			// state = 1; COMMENTED OUT SO THAT THE DEVELOPMENT BRANCH DOESN'T HAVE ANY LOOSE ENDS.
 		}
+		if (gameArea.keys && gameArea.keys[config.fireKey]) {
+			bullet = new projectile(32, 32, "projectile.png", "ship")
+		}
+	}
+}
+
+function projectile(width, height, source, type) {
+	load.push(this);
+	this.image = new Image();
+	this.image.src = source;
+	this.width = width;
+	this.height = height;
+	this.type = type;
+	this.lifeTime = 1;
+	if (this.type = "ship") {
+		this.x = ship.x + ship.width / 2 - this.width / 2;
+		this.y = ship.y + ship.width / 2 - this.height / 2;
+	}
+	this.speed = 1;
+	this.update = function() {
+		this.lifeTime--;
+		if (this.lifeTime = 0) { delete this; }
+		this.speed = this.speed * 1.2;
+		ctx = gameArea.context;
+		ctx.save();
+		ctx.translate(0, this.y + this.speed);
+		ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+		ctx.restore();
 	}
 }
 
